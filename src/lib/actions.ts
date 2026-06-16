@@ -7,6 +7,14 @@ import { createPost, updatePost, deletePost } from './store'
 
 export type ActionState = {
     errors?: Record<string, string[]>
+    values?: {
+        title: string
+        summary: string
+        text: string
+        author: string
+        authorEmail: string
+        date: string
+    }
 }
 
 const parseString = (v: FormDataEntryValue | null): string =>
@@ -30,7 +38,10 @@ export async function createPostAction(
     const result = PostSchema.safeParse(parsePostForm(formData))
 
     if (!result.success) {
-        return { errors: result.error.flatten().fieldErrors }
+        return {
+            errors: result.error.flatten().fieldErrors,
+            values: parsePostForm(formData),
+        }
     }
 
     createPost(result.data)
@@ -47,7 +58,10 @@ export async function updatePostAction(
     const result = PostSchema.safeParse(parsePostForm(formData))
 
     if (!result.success) {
-        return { errors: result.error.flatten().fieldErrors }
+        return {
+            errors: result.error.flatten().fieldErrors,
+            values: parsePostForm(formData),
+        }
     }
 
     const updated = updatePost(id, result.data)
