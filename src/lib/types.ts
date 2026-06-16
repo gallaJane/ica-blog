@@ -5,6 +5,6 @@ export interface Post {
     text: string
     author: string
     authorEmail: string
-    date: string
+    date: string // YYYY-MM-DD
     createdAt: string
 }
