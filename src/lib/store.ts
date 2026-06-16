@@ -1,6 +1,9 @@
 import { Post } from './types'
 import { seedPosts } from './seeds'
 
+
+// In production, this would use a database with query-level caching.
+// Next.js fetch() caching or React.cache() would apply here.
 const posts: Post[] = [...seedPosts];
 
 export function getPosts(): Post[] {
