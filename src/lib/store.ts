@@ -2,7 +2,7 @@ import { Post } from './types'
 import { seedPosts } from './seeds'
 
 declare global {
-     
+
     var __posts: Post[] | undefined
 }
 
@@ -15,7 +15,9 @@ if (!globalThis.__posts) {
 const posts = globalThis.__posts
 
 export function getPosts(): Post[] {
-    return [...posts]
+    return [...posts].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
 }
 
 export function getPostById(id: string): Post | undefined {
