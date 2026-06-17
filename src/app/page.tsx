@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <main className="max-w-3xl mx-auto px-4 py-10">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">Blog</h1>
+        <h1 className="text-3xl font-bold">Latest Posts</h1>
         <Button asChild>
           <Link href="/posts/new">New Post</Link>
         </Button>

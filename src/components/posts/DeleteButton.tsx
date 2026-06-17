@@ -39,7 +39,7 @@ export function DeleteButton({ id }: DeleteButtonProps) {
                 <AlertDialogHeader>
                     <AlertDialogTitle>Delete this post?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone.
+                        This post will be permanently deleted and cannot be recovered.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
