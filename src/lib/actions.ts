@@ -76,8 +76,11 @@ export async function updatePostAction(
     redirect(`/posts/${id}`)
 }
 
-export async function deletePostAction(id: string): Promise<void> {
-    deletePost(id)
+export async function deletePostAction(id: string): Promise<ActionState> {
+    const deleted = deletePost(id)
+    if (!deleted) {
+        return { errors: { general: ['Post not found'] } }
+    }
     revalidatePath('/')
     revalidatePath('/posts')
     redirect('/')
