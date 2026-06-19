@@ -31,6 +31,14 @@ function parsePostForm(formData: FormData) {
     }
 }
 
+function toFieldErrors(
+    fieldErrors: Record<string, string[] | undefined>
+): Record<string, string[]> {
+    return Object.fromEntries(
+        Object.entries(fieldErrors).map(([k, v]) => [k, v ?? []])
+    )
+}
+
 export async function createPostAction(
     _prevState: ActionState,
     formData: FormData
@@ -39,14 +47,13 @@ export async function createPostAction(
 
     if (!result.success) {
         return {
-            errors: result.error.flatten().fieldErrors,
+            errors: toFieldErrors(result.error.flatten().fieldErrors),
             values: parsePostForm(formData),
         }
     }
 
     createPost(result.data)
     revalidatePath('/')
-    revalidatePath('/posts')
     redirect('/')
 }
 
@@ -59,7 +66,7 @@ export async function updatePostAction(
 
     if (!result.success) {
         return {
-            errors: result.error.flatten().fieldErrors,
+            errors: toFieldErrors(result.error.flatten().fieldErrors),
             values: parsePostForm(formData),
         }
     }
@@ -71,7 +78,6 @@ export async function updatePostAction(
     }
 
     revalidatePath('/')
-    revalidatePath('/posts')
     revalidatePath(`/posts/${id}`)
     redirect(`/posts/${id}`)
 }
@@ -82,6 +88,5 @@ export async function deletePostAction(id: string): Promise<ActionState> {
         return { errors: { general: ['Post not found'] } }
     }
     revalidatePath('/')
-    revalidatePath('/posts')
     redirect('/')
 }
